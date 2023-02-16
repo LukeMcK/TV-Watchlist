@@ -1,7 +1,11 @@
 //Example fetch using pokemonapi.co
 document.querySelector("button").addEventListener("click", getFetch);
-let tvArray;
-let favoritesArray;
+let tvArray = [];
+let fullWatchList = [];
+if (localStorage.getItem("watchList") != null) {
+  fullWatchList = localStorage.getItem("watchList").split(",");
+}
+makeWatchList(fullWatchList);
 function getFetch() {
   const choice = document.querySelector("input").value;
   const url = `https://api.tvmaze.com/search/shows?q=${choice}`;
@@ -47,20 +51,51 @@ function makeShowList(tvShows) {
 }
 
 function addShowsToWatchlist() {
-  let watchList = document.querySelectorAll('input[type="checkbox"]:checked');
+  watchList = document.querySelectorAll(
+    '.searchedShows input[type="checkbox"]:checked'
+  );
   watchList = Array.from(watchList).map((show) => show.value);
-  console.log(watchList);
-  makeWatchList(watchList);
+  addToFullWatchList(watchList);
+  makeWatchList(fullWatchList);
 }
 
 function makeWatchList(list) {
-  let watchListSection = document.querySelector(".watchList");
+  if (!list) {
+    return;
+  }
+  if (document.querySelector(".watchList")) {
+    document.querySelector(".watchList").remove();
+  }
   let ul = document.createElement("ul");
   ul.classList.add("watchList");
+  let watchListSection = document.querySelector(".watchListSection");
+
   list.forEach((show) => {
     let li = document.createElement("li");
     li.textContent = show;
+    let input = document.createElement("input");
+    input.setAttribute("type", "checkbox");
+    input.setAttribute("value", show);
+    input.addEventListener("click", (e) => {
+      removeFromFullWatchList(e);
+      e.srcElement.parentNode.remove();
+    });
+    li.appendChild(input);
     ul.appendChild(li);
   });
   watchListSection.appendChild(ul);
+}
+
+function addToFullWatchList(list) {
+  list.forEach((show) => {
+    if (fullWatchList.indexOf(show) < 0) {
+      fullWatchList.push(show);
+    }
+  });
+  localStorage.setItem("watchList", fullWatchList.toString());
+}
+
+function removeFromFullWatchList(box) {
+  fullWatchList.splice(fullWatchList.indexOf(box.srcElement.value), 1);
+  localStorage.setItem("watchList", fullWatchList.toString());
 }
