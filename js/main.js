@@ -1,11 +1,11 @@
-//Example fetch using pokemonapi.co
 document.querySelector("button").addEventListener("click", getFetch);
 let tvArray = [];
 let fullWatchList = [];
 if (localStorage.getItem("watchList") != null) {
   fullWatchList = localStorage.getItem("watchList").split(",");
+  makeWatchList(fullWatchList);
 }
-makeWatchList(fullWatchList);
+
 function getFetch() {
   const choice = document.querySelector("input").value;
   const url = `https://api.tvmaze.com/search/shows?q=${choice}`;
@@ -98,4 +98,7 @@ function addToFullWatchList(list) {
 function removeFromFullWatchList(box) {
   fullWatchList.splice(fullWatchList.indexOf(box.srcElement.value), 1);
   localStorage.setItem("watchList", fullWatchList.toString());
+  if (localStorage.getItem("watchList") === "") {
+    localStorage.removeItem("watchList");
+  }
 }

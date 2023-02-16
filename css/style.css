@@ -3,18 +3,40 @@
 /*******************************************/
 
 /* Box Model Hack */
-*{
+* {
   box-sizing: border-box;
 }
 
 /******************************************
 /* LAYOUT
 /*******************************************/
-img{
-  display: block;
-  margin: 0 auto;
+body {
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #5818e7;
 }
 
+section {
+  flex: 1;
+  margin: 5%;
+  padding: 5%;
+  background-color: #a7e718;
+  border-radius: 10px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10%;
+}
+ul {
+  padding: 0;
+  width: 60%;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+}
 
 /******************************************
 /* ADDITIONAL STYLES
