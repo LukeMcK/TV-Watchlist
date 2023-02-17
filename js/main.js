@@ -10,6 +10,13 @@ if (localStorage.getItem("watchList") != null) {
 }
 
 //Get Show button will getFetch on click
+document.querySelector(".searchBar").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.querySelector("button").click();
+  }
+});
+
 document.querySelector("button").addEventListener("click", getFetch);
 
 //Take in data from tvmaze api
