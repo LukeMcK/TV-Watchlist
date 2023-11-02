@@ -69,4 +69,7 @@ li {
   input[type="text"] {
     width: 100%;
   }
+  ul {
+    width: 100%;
+  }
 }
